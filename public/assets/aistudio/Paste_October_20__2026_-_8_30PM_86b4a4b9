@@ -1,0 +1,756 @@
+# MASTER BUILD PROMPT: LAVIDA CARSS CINEMATIC FRONTEND
+## Google AI Studio | React + TypeScript | HOEOS-Controlled Implementation
+
+### 1. ROLE AND MISSION
+
+Act as a Senior Principal Frontend Engineer, Creative Developer, UI/UX Architect, Motion Designer, and Application Security Engineer.
+
+Build **LaVida Carwash and Lounge**, a premium, cinematic hospitality website with integrated digital ordering.
+
+The application must combine:
+
+- High-end automotive detailing and carwash services.
+- Food, grilled delicacies, drinks, whiskey, and mocktails.
+- Snooker, lounge experiences, and game-night promotions.
+- A persistent digital menu and shopping cart.
+- Server-validated ordering and WhatsApp handoff.
+- A cinematic, scroll-driven visual journey.
+- A mobile-first experience suitable for customers in Nigeria.
+
+The objective is not to produce a generic restaurant template. Create a visually distinctive, production-oriented hospitality experience that feels luxurious, immersive, and effortless to use.
+
+**Engineering rule:** Evidence Before Assumption. Inspect available files and infrastructure before implementation. Never claim an endpoint, integration, test, or deployment works without evidence.
+
+---
+
+### 2. NON-NEGOTIABLE HOEOS GOVERNANCE
+
+Follow these operating principles:
+
+1. Evidence Before Assumption.
+2. Verify Before Change.
+3. Root Cause Before Repair.
+4. Deterministic Engineering.
+5. Production Is Sacred.
+6. Single Source of Truth.
+7. Fail Closed When Authoritative Services Are Unavailable.
+
+Operate in these gates:
+
+**G0: Evidence collection**
+- Inspect all available project files, package manifests, existing components, environment configuration, API contracts, and tests.
+- Identify the current framework and build environment.
+- Record existing functionality that must be preserved.
+- Identify missing information and blockers.
+- Do not modify production systems.
+
+**G1: Contract verification**
+- Inspect the available Apps Script backend contract and existing Vercel BFF implementation.
+- Verify endpoint names, request schemas, response schemas, catalog identifiers, media fields, pricing authority, order confirmation, and idempotency behavior.
+- Use only verified field names.
+- Do not invent API responses or pretend unverified endpoints are working.
+
+**G2: Architecture**
+- Reuse existing working infrastructure wherever possible.
+- Avoid duplicate stores, API clients, backend routes, or conflicting price sources.
+- Document unresolved assumptions and their consequences.
+
+**G3: Implementation**
+- Build the frontend in small, reviewable stages.
+- Keep all unverified integrations visibly marked as unverified.
+- Use isolated development data only when explicitly necessary and label it as demonstration data.
+- Never silently substitute mock data for live production data.
+
+**G4: Verification**
+- Run the available type checks, lint, tests, production build, and browser tests.
+- Report exact commands, exit codes, observed failures, and test results.
+- Inspect the final diff and worktree state where repository tools permit.
+- Identify any remaining blockers.
+
+**Authorization boundary:** You may implement and test authorized local frontend changes. You must not deploy, publish, execute production migrations, alter live Apps Script data, or create production orders without explicit authorization.
+
+If Google AI Studio cannot access the existing repository, explain that limitation. Generate the application and supporting files in the available workspace, but do not claim you inspected or modified a repository you cannot access.
+
+---
+
+### 3. TECHNOLOGY STACK
+
+Use the following technologies when compatible with the existing project:
+
+- React.
+- TypeScript with strict type checking.
+- Vite if the existing application uses Vite.
+- Tailwind CSS.
+- Framer Motion for transitions and scroll-linked motion.
+- Zustand for cart state.
+- Zod or an equivalent schema validator for API boundaries.
+- Lucide React for icons.
+- React Three Fiber only when a genuine 3D scene materially improves the experience and can meet performance requirements.
+- Playwright for browser-level verification when available.
+
+Do not introduce Next.js into an established Vite application merely because it is listed as an option.
+
+If using Vite, implement the BFF in the existing Vercel deployment architecture or another explicitly approved server-side environment. A client-side Vite application cannot securely implement server-side proxy routes by itself.
+
+Avoid unnecessary dependencies. Record any dependency additions and their purpose.
+
+---
+
+### 4. VISUAL IDENTITY
+
+Create a sophisticated dark-luxury design system.
+
+**Core palette**
+
+- Background: `#0A0A0A`
+- Elevated surface: `#141414`
+- Secondary surface: `#1D1D1D`
+- Champagne gold: `#D4AF37`
+- Warm ivory: `#F5F0E7`
+- Muted text: `#A7A7A7`
+- Carwash accent: restrained electric blue.
+- Borders: subtle white at low opacity.
+
+**Typography**
+
+- Elegant editorial serif headings.
+- Clean sans-serif body text.
+- Strong numerical hierarchy for verified menu prices and service specifications.
+
+Use refined typography, generous spacing, premium photography, realistic reflections, controlled highlights, subtle grain, and carefully composed layouts.
+
+Avoid:
+- Generic dashboard styling.
+- Excessive neon.
+- Unnecessary gradients everywhere.
+- Crowded product grids.
+- Overuse of glassmorphism.
+- Excessive floating elements.
+- Animations that make the website slow or difficult to navigate.
+
+Use glass effects selectively for the navigation, cart drawer, and important overlays.
+
+---
+
+### 5. THE CINEMATIC SCROLL EXPERIENCE
+
+Design the homepage as one connected visual story rather than unrelated page sections.
+
+The inspiration is a premium coffee product website where the subject remains compositionally stable while the surrounding scenes transition through a carefully choreographed sequence.
+
+Adapt this principle to LaVida.
+
+#### Scene 1: Arrival
+
+Introduce LaVida with a cinematic hero showing a premium vehicle under dramatic lighting.
+
+Include:
+- LaVida brand identity.
+- A short, compelling headline.
+- Primary action: Explore Services.
+- Secondary action: Order Now.
+- A restrained scroll indicator.
+- A beautiful automotive image or video.
+
+Do not invent a physical address, phone number, operating hours, or brand claims.
+
+#### Scene 2: The Wash
+
+Show the vehicle entering a wash sequence.
+
+Animate:
+- Water and light reflections.
+- Foam or mist transitions.
+- Progressive reveal of the vehicle.
+- Subtle foreground and background parallax.
+- A vertical scroll-progress indicator.
+
+Present available carwash services from the authoritative backend.
+
+#### Scene 3: The Reveal
+
+Transition into the finished vehicle.
+
+Use matched compositions, consistent subject positioning, opacity crossfades, and restrained scaling.
+
+The transition must feel continuous, not like a slideshow.
+
+#### Scene 4: The Grill
+
+Move into food and grilled delicacies.
+
+Use high-quality backend-provided images and descriptions. Show prices only when supported by authoritative data.
+
+#### Scene 5: Drinks and Lounge
+
+Introduce drinks, mocktails, whiskey, and lounge experiences using the same visual language.
+
+#### Scene 6: Play and Entertainment
+
+Feature snooker, game night, karaoke, and other verified venue experiences.
+
+Display special offers only when they exist in the backend response. Do not fabricate discounts, dates, or availability.
+
+#### Scene 7: Offers
+
+Render available promotional cards from the offers or carousel API.
+
+Support image and video assets. Missing media must produce a designed typographic card rather than a broken-image icon.
+
+#### Scene 8: Order
+
+Transition naturally into the live catalog and ordering experience.
+
+The shop must feel like the conclusion of the cinematic story, not a disconnected website.
+
+Reuse visual motifs and media where appropriate, but keep the actual menu and order data authoritative.
+
+---
+
+### 6. MOTION ENGINEERING
+
+Implement motion based on actual scroll progress.
+
+Requirements:
+
+1. Maintain consistent focal positioning for the main visual subject across consecutive scenes.
+2. Use matched cuts and controlled crossfades.
+3. Use opacity, translation, scale, and limited rotation to transition between scenes.
+4. Crossfade incoming content before the outgoing content fully disappears.
+5. Use a persistent visual thread, such as a light trail or water stream, only if it enhances the composition.
+6. Keep text readable during transitions.
+7. Ensure scrolling remains native and responsive.
+8. Respect `prefers-reduced-motion`.
+9. Support touch devices without requiring mouse hover.
+10. Avoid scroll hijacking and excessive sticky sections.
+11. Prevent layout shifts.
+12. Provide a simplified experience on low-powered mobile devices.
+
+Do not assume that Framer Motion automatically creates true 3D rendering. Use CSS transforms for lightweight card tilt and React Three Fiber only for justified 3D scenes.
+
+The experience must remain usable when animation libraries or optional media fail.
+
+---
+
+### 7. RESPONSIVE DESIGN
+
+Mobile is a first-class target.
+
+Implement and verify layouts for:
+- Small phones around 320–375 CSS pixels wide.
+- Standard smartphones.
+- Large smartphones.
+- Tablets.
+- Desktop screens.
+- Wide desktop displays.
+
+On mobile:
+- Shorten transitions.
+- Reduce or disable expensive parallax.
+- Avoid horizontal overflow outside intentional carousels.
+- Keep navigation and cart access obvious.
+- Ensure forms and buttons are touch-friendly.
+- Avoid autoplaying every video simultaneously.
+- Pause or defer offscreen video playback.
+- Preserve smooth scrolling and readability.
+- Provide accessible alternatives to hover interactions.
+
+Use responsive images and lazy loading.
+
+---
+
+### 8. BACKEND SINGLE SOURCE OF TRUTH
+
+The React frontend must never become the authority for prices, availability, menu descriptions, or order totals.
+
+Apps Script is the intended catalog and pricing authority. The approved server-side BFF mediates browser requests.
+
+The supplied Apps Script endpoint is:
+
+`https://script.google.com/macros/s/AKfycbyzgGSIW8Bs5cQkwUXEuAl8uRSBbpfbK0U_gmUlStruNnu6D1S9djrpT7PyKgEwAnvW/exec`
+
+Required GET contracts to verify:
+
+- `?action=config`
+- `?action=catalog&domain=drinks`
+- `?action=catalog&domain=food`
+- `?action=carwash`
+- `?action=offers`
+- `?action=carousel`
+
+Required order action:
+
+`createOrder`
+
+Expected request structure to verify against the actual backend:
+
+{
+  "action": "createOrder",
+  "idempotency_key": "unique-key",
+  "order_type": "verified-order-type",
+  "customer": {
+    "name": "Customer name",
+    "phone": "Customer phone"
+  },
+  "items": [
+    {
+      "item_type": "verified-item-type",
+      "item_id": "authoritative-item-id",
+      "quantity": 1
+    }
+  ]
+}
+
+This is a specification example, not proof that the live backend accepts every field exactly as written.
+
+**Security requirements**
+
+- Never send frontend prices or totals as authoritative order values.
+- Never trust a client-provided discount.
+- Never assume a product remains available because it was previously displayed.
+- Validate item identifiers and quantities on the server.
+- Enforce order idempotency on the backend.
+- Reject malformed payloads.
+- Handle timeouts and upstream failures explicitly.
+- Do not expose private server-side credentials.
+- Keep the Apps Script URL out of client bundles when the BFF architecture is available.
+- Never log customer phone numbers unnecessarily.
+- Do not treat a successful HTTP response as proof of a valid order without validating the response schema.
+
+The Apps Script URL itself is supplied as an endpoint, not as a secret credential. A BFF does not automatically secure a publicly accessible Apps Script deployment. Assess the actual deployment's authorization and abuse protections.
+
+If the existing backend cannot provide a required security guarantee, document the gap. Do not falsely claim the frontend has solved it.
+
+---
+
+### 9. VERCEL BFF
+
+Use same-origin API routes for browser requests.
+
+Expected routes:
+
+- `GET /api/config`
+- `GET /api/catalog?domain=food`
+- `GET /api/catalog?domain=drinks`
+- `GET /api/carwash`
+- `GET /api/offers`
+- `GET /api/carousel`
+- `POST /api/orders`
+
+Route implementation requirements:
+
+- Validate allowed methods.
+- Validate query parameters and request bodies.
+- Limit request size.
+- Validate and normalize upstream responses.
+- Handle upstream timeouts.
+- Return consistent JSON response envelopes.
+- Avoid reflecting untrusted upstream HTML.
+- Prevent arbitrary URL forwarding and open-proxy behavior.
+- Set appropriate cache headers for catalog and configuration responses.
+- Do not cache order submissions.
+- Return meaningful HTTP status codes.
+- Avoid exposing stack traces or internal server details.
+
+Use the existing Vercel configuration and routing conventions if already established.
+
+If Google AI Studio is generating only a frontend and cannot implement or deploy the server-side routes, create the route source files separately and clearly identify the infrastructure work still required.
+
+Do not replace missing backend functionality with browser-side direct requests presented as production-ready.
+
+---
+
+### 10. DATA CONTRACTS AND TYPES
+
+Create shared TypeScript types based on verified backend responses.
+
+Expected conceptual types include:
+
+- Venue configuration.
+- Catalog item.
+- Carwash service.
+- Promotional offer.
+- Carousel media item.
+- Cart line.
+- Checkout request.
+- Server-confirmed order response.
+
+Every field must be based on observed contracts or explicitly documented as provisional.
+
+Do not assume:
+- The exact shape of a catalog response.
+- That every catalog item has an image.
+- That every item has the same pricing model.
+- That every service uses a fixed unit price.
+- That all order types share the same item identifier scheme.
+- That the server returns a particular order ID or total field.
+
+Normalize the verified backend contract once at the API boundary.
+
+Validate responses at runtime. Handle missing or invalid fields without rendering false information.
+
+---
+
+### 11. MIXED-MEDIA CAROUSEL
+
+Build `components/cinematic/ThreeDCarousel.tsx`.
+
+Consume the verified carousel endpoint.
+
+Support:
+- Images.
+- Muted looping video.
+- Category grouping.
+- Horizontal momentum scrolling.
+- Snap points.
+- Touch swipes.
+- Keyboard navigation.
+- Accessible labels.
+- Subtle pointer-based 3D tilt.
+- Reduced-motion preferences.
+- Lazy loading.
+- Missing-media typographic cards.
+- Failed-media fallbacks.
+- Loading skeletons.
+- Empty catalog state.
+- Error and retry states.
+
+If the media URL is empty, show an elegant branded card using the item's verified title and category.
+
+If an image or video fails, show a fallback rather than leaving an empty space.
+
+Do not fabricate promotional content when the endpoint returns no offers.
+
+Prevent multiple offscreen videos from consuming excessive resources.
+
+---
+
+### 12. PERSISTENT CART
+
+Build `store/useCartStore.ts` using Zustand and persistent storage.
+
+The cart must:
+- Survive page refreshes and browser restarts where browser storage is available.
+- Store authoritative item identifiers and quantities.
+- Avoid treating persisted prices as trustworthy.
+- Support add, remove, and quantity adjustment.
+- Prevent invalid quantities.
+- Display a right-side slide-out drawer.
+- Support accessible keyboard and focus behavior.
+- Provide an explicit empty-cart state.
+- Reconcile against the latest catalog before checkout.
+
+When an item has been removed or marked unavailable:
+- Identify the affected item.
+- Notify the customer.
+- Remove or disable it according to a clearly defined reconciliation policy.
+- Never silently discard the customer's entire cart.
+
+If the catalog request fails:
+- Preserve the cart.
+- Indicate that availability could not be verified.
+- Disable checkout until authoritative validation is available.
+
+Persist only what is necessary. Treat local storage as untrusted input and validate it when loading.
+
+Avoid hydration problems if using a framework that renders on the server.
+
+---
+
+### 13. CHECKOUT AND ORDER CONFIRMATION
+
+Build:
+- `components/checkout/CheckoutModal.tsx`
+- `components/checkout/OrderSuccess.tsx`
+
+The flow is:
+
+1. Browse the catalog.
+2. Add items to the cart.
+3. Review quantities and any explicitly estimated subtotal.
+4. Enter customer name and phone.
+5. Validate the form.
+6. Submit an order through `POST /api/orders`.
+7. Receive and validate the server response.
+8. Display the server-confirmed order details.
+9. Offer a WhatsApp handoff.
+
+The browser may calculate a provisional display estimate using the latest catalog response, but clearly label it as an estimate.
+
+Never submit prices or totals as authoritative values.
+
+Generate an idempotency key using `crypto.randomUUID()` when supported, with an approved secure fallback if necessary.
+
+Keep the same key when retrying an uncertain submission of the same order. The server must enforce idempotency.
+
+Prevent duplicate submissions while a request is in progress.
+
+Handle:
+- Validation errors.
+- Network failures.
+- Upstream timeouts.
+- Duplicate requests.
+- Unknown submission outcomes.
+- Invalid server responses.
+- Successful orders.
+
+If the response is uncertain, do not automatically create another order with a fresh key.
+
+Never show a success screen or clear the cart merely because the request was sent. Confirm the order using the actual server response.
+
+Clear the cart only after the confirmed order has been reconciled with the user's checkout state.
+
+---
+
+### 14. WHATSAPP HANDOFF
+
+Build `components/WhatsAppButton.tsx`.
+
+Retrieve the configured WhatsApp number from the verified configuration endpoint.
+
+After successful order confirmation:
+- Display the confirmed order ID.
+- Display the server-validated total and currency.
+- Construct a readable WhatsApp message.
+- Encode the message safely.
+- Normalize and validate the configured telephone number.
+- Open a `wa.me` URL using the verified number.
+- Provide a clear alternative if the WhatsApp handoff fails.
+
+The message may include the order ID, item names, quantities, and server-confirmed total only when those fields are actually returned or verified.
+
+Do not fabricate an order ID or total.
+
+The WhatsApp button is a handoff, not proof that the venue has received or accepted the WhatsApp message.
+
+---
+
+### 15. COMPONENT TREE
+
+Implement or adapt the following modules:
+
+`src/App.tsx`
+
+- Main layout.
+- Routing where appropriate.
+- Global navigation.
+- Cinematic sections.
+- Catalog integration.
+- Cart access.
+
+`src/components/cinematic/ThreeDCarousel.tsx`
+
+- Mixed-media feed.
+- Category grouping.
+- Responsive interactions.
+
+`src/components/cinematic/StorySection.tsx`
+
+- Scroll-linked scene transitions.
+
+`src/components/cinematic/ScrollProgress.tsx`
+
+- Accessible progress indicator.
+
+`src/hooks/useLaVidaAPI.ts`
+
+- Data fetching.
+- Abort handling.
+- Response validation.
+- Loading and error states.
+- Retry behavior.
+
+`src/services/laVidaClient.ts`
+
+- Typed same-origin API client.
+
+`src/store/useCartStore.ts`
+
+- Persistent cart state.
+- Safe hydration.
+- Cart reconciliation.
+
+`src/components/cart/CartDrawer.tsx`
+
+- Slide-out cart.
+- Estimated subtotal.
+- Validation status.
+
+`src/components/checkout/CheckoutModal.tsx`
+
+- Customer details.
+- Submission state.
+- Idempotent order request.
+
+`src/components/checkout/OrderSuccess.tsx`
+
+- Verified order confirmation.
+
+`src/components/WhatsAppButton.tsx`
+
+- Safe WhatsApp handoff.
+
+`src/components/SkeletonLoader.tsx`
+
+- Shimmer placeholders.
+
+`src/types/lavida.ts`
+
+- Verified domain types.
+
+`api/`
+
+- Approved Vercel BFF route handlers compatible with the actual deployment configuration.
+
+`tests/`
+
+- API contract tests.
+- Cart tests.
+- Checkout tests.
+- Media fallback tests.
+- Security tests.
+
+Reuse existing modules when appropriate instead of duplicating them.
+
+---
+
+### 16. ACCESSIBILITY AND PERFORMANCE
+
+Target WCAG 2.2 AA principles where applicable.
+
+Include:
+- Semantic HTML.
+- Keyboard-accessible controls.
+- Visible focus states.
+- Appropriate contrast.
+- Screen-reader labels.
+- Reduced-motion support.
+- Form error announcements.
+- Accessible modal focus management.
+- Useful alternative text.
+- Captions or equivalent content for meaningful video information.
+
+Performance requirements:
+- Lazy-load below-the-fold imagery.
+- Use responsive image sizes.
+- Avoid oversized assets.
+- Avoid unnecessary 3D dependencies.
+- Minimize layout shifts.
+- Pause offscreen video playback.
+- Avoid unnecessary React re-renders.
+- Use animation techniques that minimize layout recalculation.
+- Measure actual build output and browser performance where tools permit.
+
+Do not invent Lighthouse scores or performance measurements.
+
+---
+
+### 17. TESTING AND PASS/FAIL GATES
+
+Create tests appropriate to the existing stack.
+
+**Gate A: Static correctness**
+- TypeScript passes.
+- Lint passes where configured.
+- Production build passes.
+- No unresolved imports.
+- No prohibited hardcoded prices.
+
+**Gate B: Data integrity**
+- Catalog data comes through the approved API boundary.
+- Missing media does not break the carousel.
+- Invalid API responses are rejected.
+- Persisted cart data is validated.
+- Prices are not accepted as authoritative from the browser.
+
+**Gate C: Checkout integrity**
+- Invalid customer input is rejected.
+- Empty carts cannot be submitted.
+- Duplicate submissions are prevented.
+- Retry behavior preserves the idempotency key.
+- Uncertain submissions do not trigger a new order automatically.
+- Success requires validated server confirmation.
+- The displayed total matches the server-confirmed response.
+
+**Gate D: Failure handling**
+- API outage.
+- Invalid JSON.
+- Timeout.
+- Missing media.
+- Empty catalog.
+- Removed catalog item.
+- Unavailable item.
+- Failed WhatsApp handoff.
+
+**Gate E: Responsive experience**
+- Mobile layout has no unintended horizontal overflow.
+- Navigation and cart remain accessible.
+- Touch interaction works.
+- Reduced-motion preferences are honored.
+- Checkout remains usable on small screens.
+
+**Gate F: Release governance**
+- Exact changed files are reported.
+- Tests and their results are reported accurately.
+- No unauthorized production writes occurred.
+- No deployment was performed without authorization.
+- Remaining blockers are listed.
+
+A test that was not executed must be reported as NOT RUN, not PASS.
+
+If the backend cannot be safely tested without creating a live order, do not create one. Use approved isolated fixtures or mocks and clearly distinguish those tests from live integration verification.
+
+---
+
+### 18. REQUIRED DELIVERABLES
+
+Produce:
+
+1. A complete premium React frontend.
+2. The cinematic homepage and scroll-driven scene system.
+3. A responsive mixed-media carousel.
+4. The live-data API integration layer.
+5. The persistent cart.
+6. The checkout and confirmation flow.
+7. The WhatsApp handoff.
+8. The required server-side BFF source files when supported by the environment.
+9. Shared TypeScript types and runtime validation.
+10. Automated tests.
+11. A README with setup and environment instructions.
+12. An `.env.example` containing placeholders only, never real credentials.
+13. A file-by-file implementation summary.
+14. A verification report.
+15. A list of remaining infrastructure requirements.
+
+If a capability cannot be completed within the available environment, provide the exact remaining work and do not represent it as implemented.
+
+---
+
+### 19. REQUIRED EXECUTION BEHAVIOR
+
+Begin by inspecting the available workspace and identifying its capabilities.
+
+Then:
+
+1. Report the discovered framework, files, and existing architecture.
+2. Identify verified backend contracts and unresolved questions.
+3. Propose the implementation plan.
+4. Implement the frontend in reviewable stages.
+5. Run the available checks.
+6. Report the exact outcomes and blockers.
+
+Do not stop at a static mockup if the environment supports actual code generation.
+
+Do not generate a complete fictional backend contract to make the UI appear functional.
+
+Do not replace real catalog data with invented menu items or prices.
+
+Do not claim that Apps Script, Vercel, WhatsApp, or production systems are connected until the relevant integration has been verified.
+
+Do not deploy.
+
+### FINAL ACCEPTANCE CRITERION
+
+LaVida is acceptable when it delivers a premium, cinematic, mobile-friendly customer experience while maintaining strict backend price authority, reliable cart behavior, verified order confirmation, accessible interactions, and HOEOS-controlled release governance.
+
+**Build the experience beautifully. Keep the data truthful. Keep the ordering deterministic. Protect production.**

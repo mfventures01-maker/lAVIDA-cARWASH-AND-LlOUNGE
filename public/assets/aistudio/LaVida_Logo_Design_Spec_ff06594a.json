@@ -1,0 +1,135 @@
+{
+  "brand": {
+    "name": "LAVIDA",
+    "descriptor": "CARWASH AND LOUNGE",
+    "positioning": [
+      "premium",
+      "luxury",
+      "hospitality",
+      "nightlife",
+      "automotive care",
+      "entertainment"
+    ]
+  },
+  "asset": {
+    "type": "logo",
+    "format": "PNG",
+    "source_file": "a_glossy_high_end_cinematic_logo_illustration_co.png",
+    "source_path": "/mnt/data/a_glossy_high_end_cinematic_logo_illustration_co.png",
+    "note": "This JSON describes the design and references the image separately; it does not embed image bytes."
+  },
+  "visual_direction": {
+    "style": "cinematic luxury emblem",
+    "shape": "circular crest with pointed ornamental lower edge",
+    "background": "#050505",
+    "palette": {
+      "obsidian_black": "#050505",
+      "metallic_gold": "#D6A64B",
+      "champagne_gold": "#F4D58A",
+      "deep_crimson": "#7E1020",
+      "ruby_red": "#C51F35",
+      "snooker_green": "#087A43",
+      "ivory_white": "#F7F4EE"
+    },
+    "lighting": "warm gold rim lighting with restrained red highlights",
+    "finish": "polished metallic gold, glossy cinematic highlights"
+  },
+  "composition": {
+    "top_center": {
+      "element": "attractive adult feminine silhouette",
+      "appearance": "elegant profile, long flowing hair, fitted deep-red evening gown",
+      "treatment": "stylized silhouette with gold rim light"
+    },
+    "left": {
+      "element": "carwash",
+      "appearance": "glossy black luxury sedan with water spray, foam and reflections",
+      "rule": "no visible car manufacturer badge"
+    },
+    "right": {
+      "element": "lounge and snooker",
+      "appearance": "green-felt snooker table, cue and balls, warm bar lighting"
+    },
+    "title": {
+      "text": "LAVIDA",
+      "typography": "large elegant high-contrast serif capitals",
+      "finish": "metallic gold with subtle crimson shadow"
+    },
+    "subtitle": {
+      "text": "CARWASH AND LOUNGE",
+      "typography": "spaced uppercase sans-serif",
+      "color": "#F7F4EE"
+    },
+    "service_row": [
+      {
+        "label": "CARWASH",
+        "symbol": "car with water droplets"
+      },
+      {
+        "label": "FOOD",
+        "symbol": "fork and knife"
+      },
+      {
+        "label": "DRINKS",
+        "symbol": "cocktail glass"
+      },
+      {
+        "label": "SNOOKER",
+        "symbol": "8-ball"
+      },
+      {
+        "label": "KARAOKE & GAMES",
+        "symbol": "music note"
+      }
+    ]
+  },
+  "text_rules": {
+    "brand_name_exact": "LAVIDA",
+    "descriptor_exact": "CARWASH AND LOUNGE",
+    "preserve_spelling": true,
+    "avoid_extra_slogans": true,
+    "avoid_gibberish_text": true
+  },
+  "generation_prompt": "Create a premium cinematic logo emblem for LAVIDA CARWASH AND LOUNGE. Use a deep obsidian-black background, a refined circular gold crest with a pointed ornamental base, an elegant adult feminine silhouette in a deep-crimson evening gown at the upper center, a glossy black luxury sedan surrounded by tasteful water spray and foam on the left, and an upscale green-felt snooker table with cue and balls plus warm lounge-bar lighting on the right. Place LAVIDA prominently in large metallic-gold serif capitals, with CARWASH AND LOUNGE beneath it in widely spaced ivory sans-serif capitals. Along the bottom, include five small gold service symbols and labels: CARWASH, FOOD, DRINKS, SNOOKER, KARAOKE & GAMES. Keep the composition balanced, luxurious, high contrast, crisp, and suitable for premium hospitality branding. Spell all requested text exactly. Do not add other words, watermarks, or car manufacturer logos.",
+  "negative_prompt": [
+    "misspelled brand name",
+    "unreadable text",
+    "extra slogans",
+    "watermarks",
+    "manufacturer logos",
+    "cluttered composition",
+    "flat low-contrast lighting",
+    "cartoon styling",
+    "cheap clip-art appearance"
+  ],
+  "recommended_exports": [
+    {
+      "name": "primary_emblem",
+      "format": "PNG",
+      "background": "black",
+      "use": "social media and signage mockups"
+    },
+    {
+      "name": "transparent_logo",
+      "format": "PNG",
+      "background": "transparent",
+      "use": "website and app overlays"
+    },
+    {
+      "name": "vector_master",
+      "format": "SVG",
+      "use": "printing, signage and scalable UI"
+    },
+    {
+      "name": "app_icon",
+      "format": "PNG",
+      "dimensions": "1024x1024",
+      "use": "Android app icon"
+    }
+  ],
+  "integration_notes": {
+    "web": "Store the selected logo asset in the frontend public assets directory and reference it by a stable path.",
+    "android": "Export a simplified icon variant for small sizes; tiny service labels should not be relied on at app-icon scale.",
+    "carss_data_policy": "Treat the logo as a brand asset, not as menu, pricing, inventory or payment data.",
+    "production_note": "This JSON is a design specification, not a deployed integration or verified vector source."
+  }
+}
