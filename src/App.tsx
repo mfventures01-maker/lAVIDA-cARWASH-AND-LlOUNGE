@@ -6,7 +6,6 @@ import { Footer } from './components/layout/Footer';
 import { ScrollProgress } from './components/cinematic/ScrollProgress';
 import { Scene1Arrival } from './components/cinematic/Scene1Arrival';
 import { Scene2Wash } from './components/cinematic/Scene2Wash';
-import { Scene3Reveal } from './components/cinematic/Scene3Reveal';
 import { Scene4Grill } from './components/cinematic/Scene4Grill';
 import { Scene5Lounge } from './components/cinematic/Scene5Lounge';
 import { Scene6Entertainment } from './components/cinematic/Scene6Entertainment';
@@ -100,6 +99,7 @@ export default function App() {
 
       <main>
         <Scene1Arrival
+          config={config}
           onExploreServices={() => scrollTo('scene-wash')}
           onOrderNow={() => scrollTo('scene-order')}
           onOpenDownload={() => setDownloadModalOpen(true)}
@@ -110,8 +110,6 @@ export default function App() {
           currencySymbol={currencySymbol}
           onRefresh={refetch}
         />
-
-        <Scene3Reveal />
 
         <Scene4Grill
           items={foodItems}
