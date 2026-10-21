@@ -73,7 +73,8 @@ async function fetchUpstream(action: string, domain?: string): Promise<{ data: a
     if (domain) url.searchParams.set('domain', domain);
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 6000);
+    // INCREASED TIMEOUT TO 20 SECONDS TO PREVENT 503 ON LARGE DRINKS PAYLOAD
+    const timeout = setTimeout(() => controller.abort(), 20000);
 
     const response = await fetch(url.toString(), {
       signal: controller.signal,
@@ -124,8 +125,16 @@ app.get('/api/config', async (_req: Request, res: Response) => {
   if (result.data && typeof result.data === 'object') {
     return sendEnvelope(res, result.data, null, 200, 'apps_script_live');
   }
-  // Zero fallback to hardcoded objects
   return sendEnvelope(res, null, result.error || 'Config unavailable from Apps Script SSOT', 503);
+});
+
+// GET /api/categories
+app.get('/api/categories', async (_req: Request, res: Response) => {
+  const result = await fetchUpstream('categories');
+  if (result.data && Array.isArray(result.data)) {
+    return sendEnvelope(res, result.data, null, 200, 'apps_script_live');
+  }
+  return sendEnvelope(res, [], result.error || 'Categories unavailable from Apps Script SSOT', 503);
 });
 
 // GET /api/carousel
@@ -134,7 +143,6 @@ app.get('/api/carousel', async (_req: Request, res: Response) => {
   if (result.data && Array.isArray(result.data)) {
     return sendEnvelope(res, result.data, null, 200, 'apps_script_live');
   }
-  // Zero fallback to hardcoded carousel items
   return sendEnvelope(res, [], result.error || 'Carousel feed unavailable from Apps Script SSOT', 503);
 });
 
@@ -145,7 +153,6 @@ app.get('/api/catalog', async (req: Request, res: Response) => {
   if (result.data && Array.isArray(result.data)) {
     return sendEnvelope(res, result.data, null, 200, 'apps_script_live');
   }
-  // Zero fallback to hardcoded food or drinks items
   return sendEnvelope(res, [], result.error || `${domain} catalog unavailable from Apps Script SSOT`, 503);
 });
 
@@ -155,7 +162,6 @@ app.get('/api/carwash', async (_req: Request, res: Response) => {
   if (result.data && Array.isArray(result.data)) {
     return sendEnvelope(res, result.data, null, 200, 'apps_script_live');
   }
-  // Zero fallback to hardcoded car wash services
   return sendEnvelope(res, [], result.error || 'Carwash services unavailable from Apps Script SSOT', 503);
 });
 
@@ -170,7 +176,6 @@ app.get('/api/offers', async (_req: Request, res: Response) => {
 
 // GET /api/diagnostic
 app.get('/api/diagnostic', async (_req: Request, res: Response) => {
-  // Probe upstream status
   await fetchUpstream('config');
 
   res.json({
@@ -208,8 +213,6 @@ app.post('/api/endpoint', async (req: Request, res: Response) => {
 });
 
 // POST /api/orders
-// Enforces: Client submits ONLY { idempotency_key, customer, items: [{ item_type, item_id, quantity }] }
-// Server-side validation resolves prices directly from Apps Script SSOT. Zero client-side prices allowed.
 app.post('/api/orders', async (req: Request, res: Response) => {
   const parsed = CreateOrderPayloadSchema.safeParse(req.body);
   if (!parsed.success) {
@@ -223,7 +226,6 @@ app.post('/api/orders', async (req: Request, res: Response) => {
 
   const { idempotency_key, customer, items, order_type } = parsed.data;
 
-  // Idempotency check: if already submitted, return existing order
   if (idempotencyStore.has(idempotency_key)) {
     const existing = idempotencyStore.get(idempotency_key)!;
     return sendEnvelope(res, existing, null, 200);
@@ -286,7 +288,6 @@ app.post('/api/orders', async (req: Request, res: Response) => {
     });
   }
 
-  // If live catalog is unavailable because Apps Script is unauthenticated or empty:
   if (liveCatalogMap.size === 0) {
     return sendEnvelope(
       res,
@@ -372,11 +373,17 @@ async function startServer() {
   const isProduction = process.env.NODE_ENV === 'production';
 
   if (!isProduction) {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
+    try {
+      const vite = await createViteServer({
+        server: { middlewareMode: true },
+        appType: 'spa',
+      });
+      app.use(vite.middlewares);
+    } catch (viteError) {
+      console.error('\n🔴 VITE MIDDLEWARE ERROR:');
+      console.error(viteError);
+      process.exit(1);
+    }
   } else {
     app.use(express.static(path.resolve(__dirname, 'dist')));
     app.get('*', (_req: Request, res: Response) => {
@@ -385,8 +392,15 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[LaVida CARSS BFF] Running on http://0.0.0.0:${PORT} - ZERO FALLBACK SSOT MODE`);
+    console.log(`\n=========================================`);
+    console.log(`🚀 [LaVida CARSS BFF] LIVE ON http://localhost:${PORT}`);
+    console.log(`🛡️  ZERO FALLBACK SSOT MODE ACTIVE`);
+    console.log(`=========================================\n`);
   });
 }
 
-startServer();
+startServer().catch((err) => {
+  console.error("\n🔴 FATAL SERVER CRASH:");
+  console.error(err);
+  process.exit(1);
+});

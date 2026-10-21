@@ -10,7 +10,7 @@ import { Scene3Reveal } from './components/cinematic/Scene3Reveal';
 import { Scene4Grill } from './components/cinematic/Scene4Grill';
 import { Scene5Lounge } from './components/cinematic/Scene5Lounge';
 import { Scene6Entertainment } from './components/cinematic/Scene6Entertainment';
-import { Scene7Offers } from './components/cinematic/Scene7Offers';
+import { Scene7Showcase } from './components/cinematic/Scene7Showcase';
 import { Scene8OrderCatalog } from './components/cinematic/Scene8OrderCatalog';
 import { CartDrawer } from './components/cart/CartDrawer';
 import { CheckoutModal } from './components/checkout/CheckoutModal';
@@ -41,7 +41,6 @@ export default function App() {
 
   const currencySymbol = config?.currency_symbol || '₦';
 
-  // Parse QR code / URL table context on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -56,6 +55,8 @@ export default function App() {
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      console.warn(`Navigation target missing: #${id}`);
     }
   };
 
@@ -78,10 +79,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-[#F5F0E7] relative selection:bg-[#D4AF37]/30 selection:text-white font-sans bg-grain">
-      {/* Top Fixed Header with Spec Crest */}
       <Navbar />
 
-      {/* Global Governance Notice Banner */}
       <div className="w-full bg-[#161208] border-b border-amber-500/20 py-2 px-4 text-center">
         <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 text-[11px] font-mono text-amber-300">
           <ShieldAlert className="w-3.5 h-3.5 text-amber-400 shrink-0" />
@@ -97,56 +96,43 @@ export default function App() {
         </div>
       </div>
 
-      {/* Vertical Navigation & Scroll Tracker */}
       <ScrollProgress />
 
-      {/* Main Connected Cinematic Story Journey */}
       <main>
-        {/* Scene 1: Arrival Hero with Master Logo Emblem */}
         <Scene1Arrival
           onExploreServices={() => scrollTo('scene-wash')}
           onOrderNow={() => scrollTo('scene-order')}
           onOpenDownload={() => setDownloadModalOpen(true)}
         />
 
-        {/* Scene 2: The Precision Wash Sanctuary */}
         <Scene2Wash
           services={carwashServices}
           currencySymbol={currencySymbol}
           onRefresh={refetch}
         />
 
-        {/* Scene 3: The Hydrophobic Ceramic Reveal */}
         <Scene3Reveal />
 
-        {/* Scene 4: Live Charcoal Kitchen & Delicacies */}
         <Scene4Grill
           items={foodItems}
           currencySymbol={currencySymbol}
           onRefresh={refetch}
         />
 
-        {/* Scene 5: The Amber Vault & Mocktail Bar */}
         <Scene5Lounge
           items={drinkItems}
           currencySymbol={currencySymbol}
           onRefresh={refetch}
         />
 
-        {/* Scene 6: Snooker Lounge & Game Night */}
         <Scene6Entertainment
-          onExploreEvents={() => scrollTo('scene-offers')}
+          carousel={carousel}
         />
 
-        {/* Scene 7: 3D Carousel Feed & Showcase Events */}
-        <Scene7Offers
-          carouselItems={carousel}
-          currencySymbol={currencySymbol}
-          onExploreMenu={() => scrollTo('scene-order')}
-          onRefresh={refetch}
+        <Scene7Showcase
+          carousel={carousel}
         />
 
-        {/* Scene 8: Unified Digital Menu & Live Cart */}
         <Scene8OrderCatalog
           foodItems={foodItems}
           drinkItems={drinkItems}
@@ -156,16 +142,9 @@ export default function App() {
         />
       </main>
 
-      {/* Global Footer */}
       <Footer config={config} />
-
-      {/* Slide-out Cart Drawer */}
       <CartDrawer />
-
-      {/* Order Checkout Modal */}
       <CheckoutModal />
-
-      {/* Confirmed Order Receipt & WhatsApp Handoff Modal */}
       {confirmedOrder && (
         <OrderSuccess
           order={confirmedOrder}
@@ -173,11 +152,7 @@ export default function App() {
           onClose={() => setConfirmedOrder(null)}
         />
       )}
-
-      {/* Android APK Download Modal */}
       <DownloadModal config={config} />
-
-      {/* Administrative CARSS Diagnostic Modal */}
       <DiagnosticModal />
     </div>
   );
